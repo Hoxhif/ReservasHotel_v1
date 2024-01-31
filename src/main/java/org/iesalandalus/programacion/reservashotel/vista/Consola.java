@@ -1,7 +1,9 @@
 package org.iesalandalus.programacion.reservashotel.vista;
 
+
+
+
 import org.iesalandalus.programacion.reservashotel.dominio.*;
-import org.iesalandalus.programacion.reservashotel.negocio.Huespedes;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import javax.naming.OperationNotSupportedException;
@@ -9,9 +11,12 @@ import java.sql.ResultSet;
 import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import static org.iesalandalus.programacion.reservashotel.MainApp.habitaciones;
 import static org.iesalandalus.programacion.reservashotel.MainApp.huespedes;
+
 
 public class Consola {
     private Consola(){
@@ -50,7 +55,9 @@ public class Consola {
         do {
             System.out.println("Elija una opción: ");
             opcion = Entrada.entero();
-        }while (opcion<=0 || opcion>Opcion.SALIR.ordinal()); //En este caso, pongo como límite el límite máximo el ordinal de Salir, ya que doy por hecho que Salir siempre será la ultima opción.
+            if (opcion<=0 || opcion>Opcion.values().length)
+                System.out.println("Opción no válida.");
+        }while (opcion<=0 || opcion>Opcion.values().length); //De esta manera si ingresa un valor mayor a el ordinal de un enum se repite el bucle.
         switch (opcion){
             case 1: return Opcion.SALIR;
             case 2: return Opcion.INSERTAR_HUESPED;
@@ -85,7 +92,8 @@ public class Consola {
             return new Huesped(nombre,dni,correo,telefono,leerFecha("Escriba su fecha de nacimiento: "));
         }catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
-        }return null;
+            return null;
+        }
     }
 
 
@@ -100,13 +108,15 @@ public class Consola {
 
             for (Huesped huespedConDni: huespedes.get()){
                 if (huespedConDni.getDni().equals(dni)){
+                    System.out.println("Información del Cliente con DNI "+dni);
                     return huespedConDni;
                 }
             }
         }catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
-        }
-        return null;
+
+        }return null;
+
 
         // Aquí, leyendo el enunciado, yo entendía que, introduciendo un DNI, podamos obtener los datos de un huesped ya existente en el sistema, su nombre, correo, telefono, etc...
         // Sin embargo, no se como hacerlo, ya que no consigo entender como añadir el array dentro de esta clase para que lo recorre y hacer la comparacion del DNI de un huesped con el DNI introducido.
@@ -129,20 +139,44 @@ public class Consola {
     public static LocalDate leerFecha(String mensaje){
         // En este método tampoco supe bien que habia realmente que hacer, asi que lo que hice fue pasar el tipo String de fecha que preguntamos al crear el huesped y lo convertimos en LocalDate
         // haciendo un return de el array separado por el "-" pasado a entero y luego ese valor se lo asignamos a la fecha de nacimiento del huesped.
-        String fecha;
-        System.out.println(mensaje);
+        /*String fecha;
+
         do{
+            System.out.println(mensaje);
             fecha = Entrada.cadena();
-        }while (fecha.matches(Reserva.FORMATO_FECHA_RESERVA));
-        String fechaConvertida [] = mensaje.split("/");
-        return LocalDate.of(Integer.parseInt(fechaConvertida[2]), Integer.parseInt(fechaConvertida[1]), Integer.parseInt(fechaConvertida[0]));
+            if (!fecha.matches("\\d{2}/\\d{2}/\\d{4}")) { //he tenido que usar esto en vez de dd/MM/yyyy para poder usar el matches, según en un foro, no se puede usar el matches con dd/MM/yyyy porque no entiende el matches el pattern de esa manera.
+                System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy)");
+                fecha=null;
+            }
+        }while (fecha==null);
+        String fechaConvertida [] = fecha.split("/");
+
+        LocalDate fechaFinal = LocalDate.of(Integer.parseInt(fechaConvertida[2]), Integer.parseInt(fechaConvertida[1]), Integer.parseInt(fechaConvertida[0]));
+        if (fechaFinal.isLeapYear()){
+            return fechaFinal;
+        }
+        return fechaFinal;*/
+        // Este método lo he obtenido a través de chatGPT porque tengo un problema que no supe solucionar con el hecho de que es un año bisiesto y me da un error cuando crea una reserva.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate fecha = null;
+
+        do {
+            try {
+                System.out.println(mensaje);
+                String fechaString = Entrada.cadena();
+                fecha = LocalDate.parse(fechaString, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy)");
+            }
+        } while (fecha == null);
+
+        return fecha;
     }
 
 
     public static Habitacion leerHabitacion(){
         int numeroPlanta, numeroPuerta;
         double precio;
-        int opcion;
 
         System.out.println("Escriba el número de la planta: ");
         numeroPlanta = Entrada.entero();
@@ -150,7 +184,15 @@ public class Consola {
         numeroPuerta = Entrada.entero();
         System.out.println("Escriba el precio de la habitación: ");
         precio = Entrada.realDoble();
-        do {
+        System.out.println("Indique el tipo de habitación: ");
+        TipoHabitacion tipo = leerTipoHabitacion();
+        try {
+            return new Habitacion(numeroPlanta, numeroPuerta, precio, tipo);
+        }catch (NullPointerException | IllegalArgumentException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        /*do {
             System.out.println("¿Desea indicar el tipo de habitación?");
             System.out.println("1.- Sí");
             System.out.println("2.- No");
@@ -172,8 +214,8 @@ public class Consola {
             }
         }
 
+*/
 
-        return null;
     }
 
     public static Habitacion leerHabitacionPorIdentificador(){
@@ -216,14 +258,17 @@ public class Consola {
         int opcion;
         do {
             System.out.println("Tipos de habitación: ");
-            System.out.println("1.- " + TipoHabitacion.SIMPLE);
-            System.out.println("2.- " + TipoHabitacion.DOBLE);
-            System.out.println("3.- " + TipoHabitacion.TRIPLE);
-            System.out.println("4.- " + TipoHabitacion.SUITE);
+
+            TipoHabitacion menuOpciones[]= TipoHabitacion.values();
+
+            for (TipoHabitacion tipo: menuOpciones){
+                System.out.println(tipo.toString());
+            }
+
             System.out.println("Elije un tipo de habitación: ");
             opcion = Entrada.entero();
-            if (opcion<1 || opcion>4) System.out.println("Elija una opción adecuada, por favor.");
-        }while (opcion<1 || opcion>4);
+            if (opcion<1 || opcion>TipoHabitacion.values().length) System.out.println("Elija una opción adecuada, por favor.");
+        }while (opcion<1 || opcion>TipoHabitacion.values().length);
         switch (opcion){
             case 1: return TipoHabitacion.SIMPLE;
             case 2: return TipoHabitacion.DOBLE;
@@ -237,14 +282,15 @@ public class Consola {
         int opcion;
         do {
             System.out.println("Tipos de régimen: ");
-            System.out.println("1.- " + Regimen.SOLO_ALOJAMIENTO);
-            System.out.println("2.- " + Regimen.ALOJAMIENTO_DESAYUNO);
-            System.out.println("3.- " + Regimen.MEDIA_PENSION);
-            System.out.println("4.- " + Regimen.PENSION_COMPLETA);
+            Regimen menuOpciones[]= Regimen.values();
+
+            for (Regimen regimen: menuOpciones){
+                System.out.println(regimen.toString());
+            }
             System.out.println("Elije un tipo de régimen: ");
             opcion = Entrada.entero();
-            if (opcion<1 || opcion>4) System.out.println("Elija una opción adecuada, por favor.");
-        }while (opcion<1 || opcion>4);
+            if (opcion<1 || opcion>Regimen.values().length) System.out.println("Elija una opción adecuada, por favor.");
+        }while (opcion<1 || opcion>Regimen.values().length);
         switch (opcion){
             case 1: return Regimen.SOLO_ALOJAMIENTO;
             case 2: return Regimen.ALOJAMIENTO_DESAYUNO;
@@ -256,7 +302,6 @@ public class Consola {
 
     public static Reserva leerReserva(){
 
-        String fechaInicio, fechaFin;
         int numPersonas;
 
 
@@ -267,27 +312,31 @@ public class Consola {
         System.out.println("Seleccione un tipo de régimen: ");
         Regimen regimen = leerRegimen();
 
-        do {
+        /*do {
             System.out.println("Inserte la fecha de inicio de reserva: ");
             fechaInicio = Entrada.cadena();
-            if (!fechaInicio.matches(Reserva.FORMATO_FECHA_RESERVA)) System.out.println("Por favor, inserte la fecha en formato correcto (dd/MM/yyy)");
-        }while(!fechaInicio.matches(Reserva.FORMATO_FECHA_RESERVA));
+            if (!fechaInicio.matches("\\d{2}/\\d{2}/\\d{4}")) System.out.println("Por favor, inserte la fecha en formato correcto (dd/MM/yyy)");
+        }while(!fechaInicio.matches("\\d{2}/\\d{2}/\\d{4}"));
         do {
             System.out.println("Inserte la fecha de fin de reserva: ");
             fechaFin = Entrada.cadena();
-            if (!fechaFin.matches(Reserva.FORMATO_FECHA_RESERVA)) System.out.println("Por favor, inserte la fecha en formato correcto (dd/MM/yyy)");
-        }while(!fechaFin.matches(Reserva.FORMATO_FECHA_RESERVA));
+            if (!fechaFin.matches("\\d{2}/\\d{2}/\\d{4}")) System.out.println("Por favor, inserte la fecha en formato correcto (dd/MM/yyy)");
+        }while(!fechaFin.matches("\\d{2}/\\d{2}/\\d{4}"));
+        */
+        // Esto no hace falta porque ya insertamos la fecha cuando hacemos leerFecha en el constructor.
 
 
         System.out.println("Indique el número de personas en la reserva: ");
         numPersonas = Entrada.entero();
 
+
         try {
-            return new Reserva(huesped, habitacion, regimen, leerFecha("Inserte la fecha de inicio de reserva"), leerFecha("Inserte la fecha de fin de reserva"), numPersonas);
+            return new Reserva(huesped, habitacion, regimen, leerFecha("Inserte la fecha de inicio de reserva: "), leerFecha("Inserte la fecha de fin de reserva: "), numPersonas);
         }catch(NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
+            return null;
         }
-        return null;
+
 
     }
 

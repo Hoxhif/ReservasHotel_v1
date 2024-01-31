@@ -1,5 +1,6 @@
 package org.iesalandalus.programacion.reservashotel.negocio;
 
+
 import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
 import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 
@@ -38,13 +39,22 @@ public class Habitaciones {
 
 
         // Realicé esta modificación de ultima hora ya que de la otra manera me aceptaba los test pero era para salir del paso, pero realmente no funcionan bien.
-        Habitacion copiaHabitaciones [] = new Habitacion[capacidad];
+        /*Habitacion copiaHabitaciones [] = new Habitacion[capacidad];
         for (int i=0; !tamanoSuperado(i);i++){
             copiaHabitaciones[i] = new Habitacion((coleccionHabitaciones[i]));
         }
 
 
-        return copiaHabitaciones;
+        return copiaHabitaciones;*/
+
+        int j=0;
+        Habitacion[] copiaHabitaciones = new Habitacion[capacidad];
+        for (int i = 0; i < capacidad; i++) {
+            if (coleccionHabitaciones[i] != null) {
+                copiaHabitaciones[j++] = new Habitacion(coleccionHabitaciones[i]);
+            }
+
+        }return Arrays.copyOf(copiaHabitaciones, j);
 
     }
 
@@ -63,12 +73,15 @@ public class Habitaciones {
     public void insertar (Habitacion habitacion) throws OperationNotSupportedException{
         if (habitacion == null)
             throw new NullPointerException("ERROR: No se puede insertar una habitación nula.");
-        if (tamanoSuperado(tamano))
+        int indice = buscarIndice(habitacion);
+        if (capacidadSuperada(indice))
             throw new OperationNotSupportedException("ERROR: No se aceptan más habitaciones.");
-        for (int i=0; i< tamano; i++){
+        if (tamanoSuperado(indice))
+            throw new OperationNotSupportedException("ERROR: Ya existe esta habitación");
+        /*for (int i=0; i< tamano; i++){
             if (habitacion.getIdentificador().equals(coleccionHabitaciones[i].getIdentificador()))
                 throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
-        }
+        }*/
 
         coleccionHabitaciones[tamano]=habitacion;
         tamano++;
@@ -86,12 +99,13 @@ public class Habitaciones {
     }
 
     private boolean tamanoSuperado (int indice){
-        if (capacidadSuperada(indice))
+        if (indice>-1)
             return true;
         else return false;
     }
 
     private boolean capacidadSuperada(int indice){
+        indice=getTamano();
         if (indice>=getCapacidad())
             return true;
         else return false;

@@ -1,6 +1,11 @@
 package org.iesalandalus.programacion.reservashotel.negocio;
 
-import org.iesalandalus.programacion.reservashotel.dominio.*;
+
+
+import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
+import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
+import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
@@ -40,12 +45,25 @@ public class Reservas {
             coleccionReservas[2]= new Reserva(huesped3, habitacion3 , Regimen.PENSION_COMPLETA, LocalDate.of(2024,1,15),LocalDate.of(2024,1,22),3);
         return Arrays.copyOf(coleccionReservas, tamano);
         */
-        Reserva copiaReserva [] = new Reserva[capacidad];
+
+        int j=0;
+        Reserva[] copiaReservas = new Reserva[capacidad];
+        for (int i = 0; i < capacidad; i++) {
+            if (coleccionReservas[i] != null) {
+                copiaReservas[j++] = new Reserva(coleccionReservas[i]);
+            }
+
+        }return Arrays.copyOf(copiaReservas, j);
+
+
+
+
+        /*Reserva copiaReserva [] = new Reserva[capacidad];
         for (int i = 0; !tamanoSuperado(i); i++) {
             copiaReserva[i] = new Reserva(coleccionReservas[i]);
         }
 
-        return copiaReserva;
+        return copiaReserva;*/
     }
 
     public int getCapacidad() {
@@ -91,6 +109,7 @@ public class Reservas {
     }
 
     private boolean capacidadSuperada(int indice){
+        indice=getTamano();
         if (indice>=getCapacidad())
             return true;
         else return false;
