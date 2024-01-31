@@ -27,4 +27,3 @@ package org.iesalandalus.programacion.reservashotel.vista;
             return ordinal()+".-"+" "+mensajeAMostrar;
         }
     }
-}
