@@ -29,7 +29,7 @@ public class Reserva {
         setFechaInicioReserva(fechaInicioReserva);
         setFechaFinReserva(fechaFinReserva);
         setNumeroPersonas(numeroPersonas);
-        precio=0;
+        setPrecio();
     }
 
     public Reserva (Reserva reserva){
@@ -41,7 +41,7 @@ public class Reserva {
         setFechaInicioReserva(reserva.getFechaInicioReserva());
         setFechaFinReserva(reserva.getFechaFinReserva());
         setNumeroPersonas(reserva.getNumeroPersonas());
-        setPrecio(reserva.getPrecio());
+        setPrecio();
     }
 
     public Huesped getHuesped() {
@@ -137,9 +137,9 @@ public class Reserva {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio() {
         Period tiempoEstancia = Period.between(getFechaInicioReserva(),getFechaFinReserva());
-        this.precio = (getNumeroPersonas()*(precio+ getRegimen().getIncrementoPrecio()))*tiempoEstancia.getDays();
+        this.precio = (getNumeroPersonas()*(habitacion.getPrecio()+ getRegimen().getIncrementoPrecio())*tiempoEstancia.getDays());
     }
 
     public int getNumeroPersonas() {
