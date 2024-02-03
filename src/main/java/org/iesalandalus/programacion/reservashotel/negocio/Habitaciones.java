@@ -59,7 +59,53 @@ public class Habitaciones {
     }
 
     public Habitacion[] get(TipoHabitacion tipoHabitacion){
-        return null;
+        /*int contador=0;
+
+        for (Habitacion habitacion: get()) {
+
+            if (habitacion.getTipoHabitacion().equals(tipoHabitacion)) {
+                contador++;
+            }
+
+            Habitacion[] habitacionPorTipos = new Habitacion[contador];
+            contador = 0;
+
+            for (Habitacion habitaciones: get()){
+                if (habitacion.getTipoHabitacion().equals(tipoHabitacion)){
+                    habitacionPorTipos[contador++]=habitaciones;
+                }
+
+            }
+
+        }
+        return habitacionPorTipos;*/
+
+
+        if (tipoHabitacion == null)
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo // Es posible que se haya equivocado al escribir el DNI.");
+        //return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHuesped().equals(huesped)).toArray(Reserva[]::new);
+        // lo he copiado de otro método y lo he remplazado a tipoHabitacion.
+        int contador = 0;
+        for (Habitacion contadorHabitacion : get()) {
+            if (contadorHabitacion.getTipoHabitacion().equals(tipoHabitacion)) {
+                contador++;
+            }
+        }
+        Habitacion[] habitacionesTipo = new Habitacion[contador];
+        if (contador == 0) {
+            System.out.println("El huesped no tiene ningúna reserva creada.");
+        } else {
+
+            contador = 0;
+            for (Habitacion habitacionTipo : get()) {
+                if (habitacionTipo.getTipoHabitacion().equals(tipoHabitacion)) {
+                    habitacionesTipo[contador++] = habitacionTipo;
+                }
+            }
+
+        }return habitacionesTipo;
+
+
     }
 
     public int getCapacidad() {

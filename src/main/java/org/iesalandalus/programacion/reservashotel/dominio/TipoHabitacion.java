@@ -24,3 +24,4 @@ public enum TipoHabitacion {
         return ordinal()+1+".- "+cadenaAMostrar;
     }
 }
+

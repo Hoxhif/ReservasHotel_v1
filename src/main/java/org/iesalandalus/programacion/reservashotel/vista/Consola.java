@@ -30,7 +30,8 @@ public class Consola {
         Opcion menuOpciones[]= Opcion.values();
 
         for (Opcion opcion: menuOpciones){
-            System.out.println(opcion);
+            if (opcion.ordinal()<menuOpciones.length-1) //De esta manera quito la opcion de consultar disponibilidad del menu.
+                System.out.println(opcion);
         }
 
 
@@ -55,9 +56,9 @@ public class Consola {
         do {
             System.out.println("Elija una opción: ");
             opcion = Entrada.entero();
-            if (opcion<=0 || opcion>Opcion.values().length)
+            if (opcion<=0 || opcion>Opcion.values().length+1)
                 System.out.println("Opción no válida.");
-        }while (opcion<=0 || opcion>Opcion.values().length); //De esta manera si ingresa un valor mayor a el ordinal de un enum se repite el bucle.
+        }while (opcion<=0 || opcion>Opcion.values().length+1); //De esta manera si ingresa un valor mayor a el ordinal de un enum se repite el bucle.
         switch (opcion){
             case 1: return Opcion.SALIR;
             case 2: return Opcion.INSERTAR_HUESPED;
@@ -108,7 +109,6 @@ public class Consola {
 
             for (Huesped huespedConDni: huespedes.get()){
                 if (huespedConDni.getDni().equals(dni)){
-                    System.out.println("Información del Cliente con DNI "+dni);
                     return huespedConDni;
                 }
             }
@@ -289,8 +289,8 @@ public class Consola {
             }
             System.out.println("Elije un tipo de régimen: ");
             opcion = Entrada.entero();
-            if (opcion<1 || opcion>Regimen.values().length) System.out.println("Elija una opción adecuada, por favor.");
-        }while (opcion<1 || opcion>Regimen.values().length);
+            if (opcion<1 || opcion>Regimen.values().length+1) System.out.println("Elija una opción adecuada, por favor.");
+        }while (opcion<1 || opcion>Regimen.values().length+1);
         switch (opcion){
             case 1: return Regimen.SOLO_ALOJAMIENTO;
             case 2: return Regimen.ALOJAMIENTO_DESAYUNO;

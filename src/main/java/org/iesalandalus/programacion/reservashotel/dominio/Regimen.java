@@ -22,7 +22,7 @@ public enum Regimen {
 
     @Override
     public String toString() {
-        return ordinal()+".- "+cadenaAMostrar;
+        return ordinal()+1+".- "+cadenaAMostrar;
     }
 }
 

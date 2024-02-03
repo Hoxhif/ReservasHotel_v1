@@ -151,16 +151,56 @@ public class Reservas {
      * Al menos esto es lo que he interpretado y parece ser así despues de haberlo examinado su sintaxis.
      * en cuanto al otro método getReservas de tipoHabitacion hace exactamente lo mismo pero con las habitaciones, y al ser un Enum utiliza el == en vez del equals para ver cual cojer del array.*/
 
-    public Reserva[] getReservas (Huesped huesped){
+    public Reserva[] getReservas (Huesped huesped) {
         if (huesped == null)
-            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo.");
-        return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHuesped().equals(huesped)).toArray(Reserva[]::new);
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo // Es posible que se haya equivocado al escribir el DNI.");
+        //return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHuesped().equals(huesped)).toArray(Reserva[]::new);
+
+        int contador = 0;
+        for (Reserva contadorHuesped : get()) {
+            if (contadorHuesped.getHuesped().equals(huesped)) {
+                contador++;
+            }
+        }
+        Reserva[] reservasHuesped = new Reserva[contador];
+        if (contador == 0) {
+            System.out.println("El huesped no tiene ningúna reserva creada.");
+        } else {
+
+            contador = 0;
+            for (Reserva reservaHuesped : get()) {
+                if (reservaHuesped.getHuesped().equals(huesped)) {
+                    reservasHuesped[contador++] = reservaHuesped;
+                }
+            }
+
+        }return reservasHuesped;
     }
 
-    public Reserva[] getReservas (TipoHabitacion tipoHabitacion){
-        if (tipoHabitacion==null)
+
+    public Reserva[] getReservas (TipoHabitacion tipoHabitacion) {
+        if (tipoHabitacion == null)
             throw new NullPointerException("ERROR: No se pueden buscar reservas de un tipo de habitación nula.");
-        return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHabitacion().getTipoHabitacion() == tipoHabitacion).toArray(Reserva[]::new);
+        //return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHabitacion().getTipoHabitacion() == tipoHabitacion).toArray(Reserva[]::new);
+        int contador = 0;
+        for (Reserva contadorTipoHabitacion : get()) {
+            if (contadorTipoHabitacion.getHabitacion().getTipoHabitacion().equals(tipoHabitacion)) {
+                contador++;
+            }
+        }
+        Reserva[] reservasTipoHabitacion = new Reserva[contador];
+        if (contador == 0) {
+            System.out.println("El tipo de habitación no tiene ningúna reservada creada.");
+        } else {
+
+            contador = 0;
+            for (Reserva reservaTipoHabitacion : get()) {
+                if (reservaTipoHabitacion.getHabitacion().getTipoHabitacion().equals(tipoHabitacion)) {
+                    reservasTipoHabitacion[contador++] = reservaTipoHabitacion;
+                }
+            }
+
+        }return reservasTipoHabitacion;
     }
 
     /*
@@ -170,10 +210,40 @@ public class Reservas {
         if (habitacion == null)
             throw new NullPointerException("ERROR: No se pueden buscar reservas de una habitación nula.");
         LocalDate fechaActual = LocalDate.now();
-        return Arrays.stream(copiaProfundaReservas())
+        /*return Arrays.stream(copiaProfundaReservas())
                 .filter(reserva -> reserva.getHabitacion().equals(habitacion) &&
                         reserva.getFechaInicioReserva().isAfter(fechaActual))
-                .toArray(Reserva[]::new);
+                .toArray(Reserva[]::new);*/
+        //Reserva[] reservasHabitacion = new Reserva[tamano];
+        /*int contador=0;
+        for (Reserva reservaHabitacion: get()){
+            if (reservaHabitacion.getHabitacion().equals(habitacion)){
+                reservasHabitacion[contador++]=reservaHabitacion;
+            }
+        }
+        Reserva[] reservasFuturas = new Reserva[contador];
+        contador=0;
+        for (Reserva reservaFutura: reservasHabitacion){
+            if (reservaFutura.getFechaInicioReserva().isAfter(fechaActual)){
+                reservasFuturas[contador++] = reservaFutura;
+            }
+        }return reservasFuturas;*/
+
+        int contador=0;
+        for (Reserva reserva: get()){
+            if (reserva.getHabitacion().equals(habitacion) && reserva.getFechaInicioReserva().isAfter(fechaActual)){
+                contador++;
+            }
+        }
+
+        Reserva[] reservasFuturas = new Reserva[contador];
+        contador=0;
+        for (Reserva reservaFutura: get()){
+            if (reservaFutura.getHabitacion().equals(habitacion) && reservaFutura.getFechaInicioReserva().isAfter(fechaActual)){
+                reservasFuturas[contador++]=reservaFutura;
+            }
+        }
+        return reservasFuturas;
     }
 
 
