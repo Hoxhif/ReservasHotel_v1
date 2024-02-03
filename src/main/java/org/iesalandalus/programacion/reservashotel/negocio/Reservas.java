@@ -153,7 +153,7 @@ public class Reservas {
 
     public Reserva[] getReservas (Huesped huesped) {
         if (huesped == null)
-            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo // Es posible que se haya equivocado al escribir el DNI.");
+            throw new NullPointerException("ERROR: No se pueden buscar reservas de un huesped nulo.");
         //return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHuesped().equals(huesped)).toArray(Reserva[]::new);
 
         int contador = 0;

@@ -15,7 +15,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.platform:junit-platform-suite-engine:1.9.1'
-    // Entrada para que el repositorio jitpack.io sepa acceder a la localización de librería entrada
+     //Entrada para que el repositorio jitpack.io sepa acceder a la localización de librería entrada
     implementation 'com.github.JRJimenezReyes:entrada:1.0.3'
 }
 

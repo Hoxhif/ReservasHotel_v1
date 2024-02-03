@@ -76,7 +76,7 @@ public class Huespedes {
         if (capacidadSuperada(indice))
             throw new OperationNotSupportedException("ERROR: No se aceptan más huéspedes.");
         if (tamanoSuperado(indice))
-            throw new OperationNotSupportedException("ERROR: El huesped ya existe.");
+            throw new OperationNotSupportedException("ERROR: Ya existe un huésped con ese dni.");
         /*for (int i=0; i< tamano; i++){
         if (huesped.getDni().equals(coleccionHuespedes[i].getDni()))
             throw new OperationNotSupportedException("ERROR: Ya existe un huésped con ese dni.");

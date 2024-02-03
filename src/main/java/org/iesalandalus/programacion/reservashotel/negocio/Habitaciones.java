@@ -123,7 +123,7 @@ public class Habitaciones {
         if (capacidadSuperada(indice))
             throw new OperationNotSupportedException("ERROR: No se aceptan más habitaciones.");
         if (tamanoSuperado(indice))
-            throw new OperationNotSupportedException("ERROR: Ya existe esta habitación");
+            throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
         /*for (int i=0; i< tamano; i++){
             if (habitacion.getIdentificador().equals(coleccionHabitaciones[i].getIdentificador()))
                 throw new OperationNotSupportedException("ERROR: Ya existe una habitación con ese identificador.");
