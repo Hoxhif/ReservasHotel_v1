@@ -452,6 +452,7 @@ public class MainApp {
 
 
     public static void main(String[] args) {
+        //Inicio del programa.
         habitaciones = new Habitaciones(CAPACIDAD);
         huespedes = new Huespedes(CAPACIDAD);
         reservas = new Reservas(CAPACIDAD);
@@ -461,10 +462,9 @@ public class MainApp {
             Consola.mostrarMenu();
             opcion=Consola.elegirOpcion();
             ejecutarOpcion(opcion);
-        }while (opcion != Opcion.SALIR); //Esto me provoca que me pregunte dos veces si quiero salir...
+        }while (opcion != Opcion.SALIR);
         System.out.println("Fin del programa.");
     }
-
 
 
 }
