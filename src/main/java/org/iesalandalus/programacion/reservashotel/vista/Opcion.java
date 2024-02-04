@@ -13,6 +13,8 @@ public enum Opcion {
     INSERTAR_RESERVA("Insertar Reserva"),
     ANULAR_RESERVA("Anular Reserva"),
     MOSTRAR_RESERVAS("Mostrar Reservas"),
+    REALIZAR_CHECKIN("Realizar CheckIn"),
+    REALIZAR_CHECKOUT("Realizar CheckOut"),
     CONSULTAR_DISPONIBILIDAD("Consultar Disponibilidad");
 
 
