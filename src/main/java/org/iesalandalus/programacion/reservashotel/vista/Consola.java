@@ -170,7 +170,7 @@ public class Consola {
         return fecha;
     }
 
-    public LocalDateTime leerFechaHora(String mensaje){
+    public static LocalDateTime leerFechaHora(String mensaje){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
         LocalDateTime fecha = null;
 
