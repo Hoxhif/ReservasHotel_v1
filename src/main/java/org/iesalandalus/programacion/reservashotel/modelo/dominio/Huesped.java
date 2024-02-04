@@ -1,9 +1,7 @@
-package org.iesalandalus.programacion.reservashotel.dominio;
+package org.iesalandalus.programacion.reservashotel.modelo.dominio;
 
-import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class Huesped {

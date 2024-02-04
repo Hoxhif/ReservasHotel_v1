@@ -3,14 +3,11 @@ package org.iesalandalus.programacion.reservashotel.vista;
 
 
 
-import org.iesalandalus.programacion.reservashotel.dominio.*;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
+import org.iesalandalus.programacion.reservashotel.modelo.negocio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
-import javax.naming.OperationNotSupportedException;
-import java.sql.ResultSet;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 

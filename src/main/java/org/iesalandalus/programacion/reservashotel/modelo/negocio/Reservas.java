@@ -1,14 +1,15 @@
-package org.iesalandalus.programacion.reservashotel.negocio;
+package org.iesalandalus.programacion.reservashotel.modelo.negocio;
 
 
 
-import org.iesalandalus.programacion.reservashotel.dominio.Habitacion;
-import org.iesalandalus.programacion.reservashotel.dominio.Huesped;
-import org.iesalandalus.programacion.reservashotel.dominio.Reserva;
-import org.iesalandalus.programacion.reservashotel.dominio.TipoHabitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.Reserva;
+import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class Reservas {
@@ -246,6 +247,13 @@ public class Reservas {
         return reservasFuturas;
     }
 
+    public void realizarCheckin(Reserva reserva, LocalDateTime fecha){
+        reserva.setCheckIn(fecha);
+    }
+
+    public void realizarCheckout(Reserva reserva, LocalDateTime fecha){
+        reserva.setCheckOut(fecha);
+    }
 
 
 }
