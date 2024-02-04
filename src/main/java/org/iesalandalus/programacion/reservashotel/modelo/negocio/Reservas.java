@@ -248,10 +248,14 @@ public class Reservas {
     }
 
     public void realizarCheckin(Reserva reserva, LocalDateTime fecha){
+        if (reserva == null | fecha == null)
+            throw new NullPointerException("Ni la reserva ni la fecha pueden ser nulas.");
         reserva.setCheckIn(fecha);
     }
 
     public void realizarCheckout(Reserva reserva, LocalDateTime fecha){
+        if (reserva == null | fecha == null)
+            throw new NullPointerException("Ni la reserva ni la fecha pueden ser nulas.");
         reserva.setCheckOut(fecha);
     }
 
