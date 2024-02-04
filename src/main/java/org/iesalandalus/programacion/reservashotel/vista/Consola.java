@@ -8,11 +8,11 @@ import org.iesalandalus.programacion.reservashotel.modelo.negocio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static org.iesalandalus.programacion.reservashotel.MainApp.habitaciones;
-import static org.iesalandalus.programacion.reservashotel.MainApp.huespedes;
+import static org.iesalandalus.programacion.reservashotel.MainApp.*;
 
 
 public class Consola {
@@ -164,6 +164,23 @@ public class Consola {
                 fecha = LocalDate.parse(fechaString, formatter);
             } catch (DateTimeParseException e) {
                 System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy)");
+            }
+        } while (fecha == null);
+
+        return fecha;
+    }
+
+    public LocalDateTime leerFechaHora(String mensaje){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
+        LocalDateTime fecha = null;
+
+        do {
+            try {
+                System.out.println(mensaje);
+                String fechaString = Entrada.cadena();
+                fecha = LocalDateTime.parse(fechaString, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy hh:mm:ss)");
             }
         } while (fecha == null);
 
