@@ -506,7 +506,7 @@ public class Vista {
         Reserva reservaARealizarCheckin= controlador.getReserva(huesped)[opcion-1]; //Aqu� ten�a que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
 
         try {
-            controlador.realizarCheckin(reservaARealizarCheckin, Consola.leerFechaHora("Inserte la fecha de Checkin: "));
+            controlador.realizarCheckin(reservaARealizarCheckin, Consola.leerFechaHora("Inserte la fecha y hora de Checkin: "));
             System.out.println("Se ha realizado el CheckIn correctamente.");
         }catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
@@ -540,7 +540,7 @@ public class Vista {
             }
         }
     try {
-    controlador.realizarCheckout(reservaARealizarCheckout, Consola.leerFechaHora("Inserte la fecha de Checkout: "));
+    controlador.realizarCheckout(reservaARealizarCheckout, Consola.leerFechaHora("Inserte la fecha y hora de Checkout: "));
         System.out.println("Se ha realizado el CheckOut correctamente.");
     }catch (NullPointerException | IllegalArgumentException e){
         System.out.println(e.getMessage());

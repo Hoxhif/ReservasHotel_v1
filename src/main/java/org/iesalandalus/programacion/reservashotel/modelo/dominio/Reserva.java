@@ -11,7 +11,7 @@ public class Reserva {
     public static final int MAX_NUMERO_MESES_RESERVA=6;
     private static final int MAX_HORAS_POSTERIOR_CHECKOUT=12;
     public static final String FORMATO_FECHA_RESERVA="dd/MM/yyyy";
-    public static final String FORMATO_FECHA_HORA_RESERVA="dd/MM/yyyy hh:mm:ss";
+    public static final String FORMATO_FECHA_HORA_RESERVA="dd/MM/yyyy HH:mm:ss";
     private Huesped huesped;
     private Habitacion habitacion;
     private Regimen regimen;
@@ -170,9 +170,21 @@ public class Reserva {
     @Override
     public String toString() {
         // Esta solucion usando un operador ternario me la ofrecio ChatGPT preguntando para poder mostrar un mensaje diferente si detecta que es null la reserva.
-        String checkInString = (checkIn != null) ? getCheckIn().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA)) : "No registrado";
+        /*String checkInString = (checkIn != null) ? getCheckIn().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA)) : "No registrado";
         String checkOutString = (checkOut != null) ? getCheckOut().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA)) : "No registrado";
 
+        return String.format("Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",getHuesped().getNombre(), getHuesped().getDni(),
+                getHabitacion().getIdentificador(),getHabitacion().getTipoHabitacion(), getFechaInicioReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA)),
+                getFechaFinReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA)), checkInString,
+                checkOutString, getPrecio(), getNumeroPersonas());*/
+        String checkInString="";
+        String checkOutString="";
+        if (getCheckIn()==null) checkInString="No registrado";
+        if (getCheckOut()==null) checkOutString="No registrado";
+        if (getCheckIn()!=null) checkInString= getCheckIn().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
+        if (getCheckOut()!=null) checkOutString= getCheckOut().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
+
+        //return "Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",getHuesped().getNombre(),getHuesped().getDni(),getHabitacion().getIdentificador(),getHabitacion().getTipoHabitacion(),getFechaInicioReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)),getFechaFinReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)),checkInString,checkOutString,getPrecio(),getNumeroPersonas();
         return String.format("Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",getHuesped().getNombre(), getHuesped().getDni(),
                 getHabitacion().getIdentificador(),getHabitacion().getTipoHabitacion(), getFechaInicioReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)),
                 getFechaFinReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)), checkInString,
@@ -186,7 +198,5 @@ public class Reserva {
 
         System.out.println();
     }*/
-
-
 
 }

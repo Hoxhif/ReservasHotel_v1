@@ -29,7 +29,8 @@ public class MainApp {
         Modelo modelo= new Modelo();
         Vista vista=new Vista();
         Controlador controlador= new Controlador(modelo, vista);
-        controlador.comenzar();
+            controlador.comenzar();
+
     }
 
 }
