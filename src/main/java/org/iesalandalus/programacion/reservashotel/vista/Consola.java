@@ -27,7 +27,7 @@ public class Consola {
         Opcion menuOpciones[]= Opcion.values();
 
         for (Opcion opcion: menuOpciones){
-            if (opcion.ordinal()<menuOpciones.length-1) //De esta manera quito la opcion de consultar disponibilidad del menu.
+            if (opcion.ordinal()<menuOpciones.length) //De esta manera quito la opcion de consultar disponibilidad del menu.
                 System.out.println(opcion);
         }
 
@@ -53,9 +53,9 @@ public class Consola {
         do {
             System.out.println("Elija una opción: ");
             opcion = Entrada.entero();
-            if (opcion<=0 || opcion>Opcion.values().length+1)
+            if (opcion<=0 || opcion>Opcion.values().length)
                 System.out.println("Opción no válida.");
-        }while (opcion<=0 || opcion>Opcion.values().length+1); //De esta manera si ingresa un valor mayor a el ordinal de un enum se repite el bucle.
+        }while (opcion<=0 || opcion>Opcion.values().length); //De esta manera si ingresa un valor mayor a el ordinal de un enum se repite el bucle.
         switch (opcion){
             case 1: return Opcion.SALIR;
             case 2: return Opcion.INSERTAR_HUESPED;

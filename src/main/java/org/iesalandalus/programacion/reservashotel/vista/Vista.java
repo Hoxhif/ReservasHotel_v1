@@ -30,6 +30,7 @@ public class Vista {
             opcion=Consola.elegirOpcion();
             ejecutarOpcion(opcion);
         }while (opcion != Opcion.SALIR);
+        terminar();
     }
 
     public void terminar(){
@@ -79,15 +80,24 @@ public class Vista {
             case REALIZAR_CHECKOUT:
                 realizarCheckout();
                 break;
-            //case CONSULTAR_DISPONIBILIDAD:
-            //  consultarDisponibilidad(Consola.leerTipoHabitacion(), Consola.leerFecha("Inserte la fecha de posible reserva: "), Consola.leerFecha("Inserte la fecha de posible fin reserva: "));
-            //break;
-            default:
-                break;
+            case CONSULTAR_DISPONIBILIDAD:
+                try {
+                    Habitacion habitacion = Consola.leerHabitacionPorIdentificador();
+                    Habitacion comprobarHabitacion = consultarDisponibilidad(habitacion.getTipoHabitacion(), Consola.leerFecha("Inserte la fecha de posible reserva: "), Consola.leerFecha("Inserte la fecha de posible fin reserva: "));
+                    if (comprobarHabitacion == null)
+                        System.out.println("La habitación estará ocupada en esas fechas.");
+                    else if (comprobarHabitacion != null)
+                        System.out.println("La habitación está disponible en esas fechas.");
+                    break;
+                }catch(NullPointerException e){
+                    System.out.println(e.getMessage());
+                }
         }
+
+
     }
 
-    private void insertarHuesped(){
+    private void insertarHuesped() {
         // En esta parte lo que hago es crear un nuevo objeto de tipo huesped y le doy como valor los datos que devuelven leerHuesped al llamar al metodo y despues llamo al metodo de la clase huespedes para insertarlo en el array pasando por parametro al propiop huesped creado.
         // se podr�a realmente haber omitido la linea de crear un nuevo objeto nuevoHuesped y directamente haber puesto en huespedes.insertar(Consola.leerHuesped());
         try {
@@ -96,6 +106,7 @@ public class Vista {
             System.out.println("Huesped creado satisfactoriamente");
         } catch (OperationNotSupportedException | NullPointerException e) {
             System.out.println(e.getMessage());
+
         }
     }
 
@@ -183,8 +194,10 @@ public class Vista {
                 } else
                     System.out.println("No se puede realizar la reserva en esas fechas. No se encuentra disponible la habitaci�n");
             }else{
-                controlador.insertar(nuevaReserva);
-                System.out.println("Reserva creada satisfactoriamente");
+                if (nuevaReserva.getHabitacion()!=null) {
+                    controlador.insertar(nuevaReserva);
+                    System.out.println("Reserva creada satisfactoriamente");
+                }
             }
         }catch (OperationNotSupportedException | NullPointerException e){
             System.out.println(e.getMessage());
@@ -493,7 +506,6 @@ public class Vista {
         Reserva reservaARealizarCheckin= controlador.getReserva(huesped)[opcion-1]; //Aqu� ten�a que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
 
         try {
-
             controlador.realizarCheckin(reservaARealizarCheckin, Consola.leerFechaHora("Inserte la fecha de Checkin: "));
             System.out.println("Se ha realizado el CheckIn correctamente.");
         }catch (NullPointerException | IllegalArgumentException e){
