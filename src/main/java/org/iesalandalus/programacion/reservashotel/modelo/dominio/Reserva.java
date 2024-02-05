@@ -194,9 +194,9 @@ public class Reserva {
         String checkInString="";
         String checkOutString="";
         if (checkIn==null) checkInString="No registrado";
-        else checkInString= checkIn.toString();
+        else checkInString= getCheckIn().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
         if (checkOut==null) checkOutString="No registrado";
-        else checkOutString= checkOut.toString();
+        else checkOutString= getCheckOut().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
 
 
 
