@@ -16,9 +16,9 @@ import java.time.LocalDateTime;
 public class Modelo {
 
     // Aquí hemos copiado y pegado
-    public Habitaciones habitaciones;
-    public Reservas reservas;
-    public Huespedes huespedes;
+    public static Habitaciones habitaciones;
+    public static Reservas reservas;
+    public static Huespedes huespedes;
     public static final int CAPACIDAD=5;
 
 
@@ -26,14 +26,14 @@ public class Modelo {
 
     }
 
-    public void comenzar(){
+    public static void comenzar(){
         // Aquí hemos copiado y pegado lo que teníamos en el main del mainApp anteriormente.
         habitaciones = new Habitaciones(CAPACIDAD);
         huespedes = new Huespedes(CAPACIDAD);
         reservas = new Reservas(CAPACIDAD);
     }
 
-    public void terminar(){
+    public static void terminar(){
         System.out.println("Fin del programa.");
     }
 
@@ -43,15 +43,15 @@ public class Modelo {
         huespedes.insertar(huesped);
     }
 
-    public Huesped buscar(Huesped huesped){
+    public static Huesped buscar(Huesped huesped){
         return huespedes.buscar(huesped);
     }
 
-    public void borrar(Huesped huesped) throws OperationNotSupportedException{
+    public static void borrar(Huesped huesped) throws OperationNotSupportedException{
         huespedes.borrar(huesped);
     }
 
-    public Huesped[] getHuespedes(){
+    public static Huesped[] getHuespedes(){
         return huespedes.get();
         /*Huesped[] huespedesADevolver = new Huesped[huespedes.get().length];
 
@@ -62,19 +62,19 @@ public class Modelo {
         return huespedesADevolver;*/
     }
 
-    public void insertar(Habitacion habitacion)throws OperationNotSupportedException{
+    public static void insertar(Habitacion habitacion)throws OperationNotSupportedException{
         habitaciones.insertar(habitacion);
     }
 
-    public Habitacion buscar(Habitacion habitacion){
+    public static Habitacion buscar(Habitacion habitacion){
         return habitaciones.buscar(habitacion);
     }
 
-    public void borrar(Habitacion habitacion)throws OperationNotSupportedException{
+    public static void borrar(Habitacion habitacion)throws OperationNotSupportedException{
         habitaciones.borrar(habitacion);
     }
 
-    public Habitacion[] getHabitaciones(){
+    public static Habitacion[] getHabitaciones(){
         return habitaciones.get();
         /*Habitacion[] habitacionesADevolver = new Habitacion[habitaciones.get().length];
 
@@ -85,7 +85,7 @@ public class Modelo {
         return habitacionesADevolver;*/
     }
 
-    public Habitacion[] getHabitaciones(TipoHabitacion tipoHabitacion){
+    public static Habitacion[] getHabitaciones(TipoHabitacion tipoHabitacion){
         return habitaciones.get(tipoHabitacion);
         /*Habitacion[] habitacionesADevolver = new Habitacion[habitaciones.get(tipoHabitacion).length];
 
@@ -98,19 +98,19 @@ public class Modelo {
         return habitacionesADevolver;*/
     }
 
-    public void insertar(Reserva reserva)throws OperationNotSupportedException{
+    public static void insertar(Reserva reserva)throws OperationNotSupportedException{
         reservas.insertar(reserva);
     }
 
-    public void borrar(Reserva reserva)throws OperationNotSupportedException{
+    public static void borrar(Reserva reserva)throws OperationNotSupportedException{
         reservas.borrar(reserva);
     }
 
-    public Reserva buscar(Reserva reserva){
+    public static Reserva buscar(Reserva reserva){
         return reservas.buscar(reserva);
     }
 
-    public Reserva[] getReservas(){
+    public static Reserva[] getReservas(){
         return reservas.get();
         // He hecho esto porque en el enunciado pone que que devolvemos una lista de objetos nuevos de los geters, y no una copia.
         // LUEGO pregunte a mis compañeros y me dijeron que solo hacia falta el reservas.get();
@@ -122,7 +122,7 @@ public class Modelo {
         return reservasADevolver;*/
     }
 
-    public Reserva[] getReserva(Huesped huesped){
+    public static Reserva[] getReserva(Huesped huesped){
         return reservas.getReservas(huesped);
         /*Reserva[] reservasADevolver = new Reserva[reservas.getReservas(huesped).length];
 
@@ -135,7 +135,7 @@ public class Modelo {
         return reservasADevolver;*/
     }
 
-    public Reserva[] getReserva(TipoHabitacion tipoHabitacion){
+    public static Reserva[] getReserva(TipoHabitacion tipoHabitacion){
         return reservas.getReservas(tipoHabitacion);
         /*Reserva[] reservasADevolver = new Reserva[reservas.getReservas(tipoHabitacion).length];
 
@@ -148,7 +148,7 @@ public class Modelo {
         return reservasADevolver;*/
     }
 
-    public Reserva[] getReserva(Habitacion habitacion){
+    public static Reserva[] getReserva(Habitacion habitacion){
         /*if (habitacion == null)
             throw new NullPointerException("ERROR: No se pueden buscar reservas de un tipo de habitación nula.");
         //return Arrays.stream(copiaProfundaReservas()).filter(reserva -> reserva.getHabitacion().getTipoHabitacion() == tipoHabitacion).toArray(Reserva[]::new);
@@ -185,11 +185,11 @@ public class Modelo {
         return reservasADevolver;*/
     }
 
-    public void realizarCheckin(Reserva reserva, LocalDateTime fecha){
+    public static void realizarCheckin(Reserva reserva, LocalDateTime fecha){
         reservas.realizarCheckin(reserva,fecha);
     }
 
-    public void realizarCheckout(Reserva reserva, LocalDateTime fecha){
+    public static void realizarCheckout(Reserva reserva, LocalDateTime fecha){
         reservas.realizarCheckout(reserva,fecha);
     }
 

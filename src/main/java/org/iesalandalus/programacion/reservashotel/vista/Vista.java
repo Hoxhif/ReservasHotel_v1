@@ -89,7 +89,7 @@ public class Vista {
 
     private void insertarHuesped(){
         // En esta parte lo que hago es crear un nuevo objeto de tipo huesped y le doy como valor los datos que devuelven leerHuesped al llamar al metodo y despues llamo al metodo de la clase huespedes para insertarlo en el array pasando por parametro al propiop huesped creado.
-        // se podría realmente haber omitido la linea de crear un nuevo objeto nuevoHuesped y directamente haber puesto en huespedes.insertar(Consola.leerHuesped());
+        // se podrï¿½a realmente haber omitido la linea de crear un nuevo objeto nuevoHuesped y directamente haber puesto en huespedes.insertar(Consola.leerHuesped());
         try {
             Huesped nuevoHuesped = Consola.leerHuesped();
             controlador.insertar(nuevoHuesped);
@@ -135,7 +135,7 @@ public class Vista {
         try{
             Habitacion nuevaHabitacion = Consola.leerHabitacion();
             controlador.insertar(nuevaHabitacion);
-            System.out.println("Habitación creada satisfactoriamente");
+            System.out.println("Habitaciï¿½n creada satisfactoriamente");
         }catch (OperationNotSupportedException | NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -155,7 +155,7 @@ public class Vista {
         Habitacion habitacionABorrar = Consola.leerHabitacionPorIdentificador();
         try{
             controlador.borrar(habitacionABorrar);
-            System.out.println("Habitación borrada satisfactoriamente");
+            System.out.println("Habitaciï¿½n borrada satisfactoriamente");
         }catch (OperationNotSupportedException e){
             System.out.println(e.getMessage());
         }
@@ -181,7 +181,7 @@ public class Vista {
                     controlador.insertar(nuevaReserva);
                     System.out.println("Reserva creada satisfactoriamente");
                 } else
-                    System.out.println("No se puede realizar la reserva en esas fechas. No se encuentra disponible la habitación");
+                    System.out.println("No se puede realizar la reserva en esas fechas. No se encuentra disponible la habitaciï¿½n");
             }else{
                 controlador.insertar(nuevaReserva);
                 System.out.println("Reserva creada satisfactoriamente");
@@ -213,8 +213,10 @@ public class Vista {
         }*/
 
         try{
+            int contador=1;
             for (Reserva reservasHuesped: controlador.getReserva(huesped)){
-                System.out.println(reservasHuesped);
+                System.out.println(contador+": "+reservasHuesped);
+                contador++;
             }
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
@@ -224,7 +226,7 @@ public class Vista {
 
     private void listarReservas (TipoHabitacion tipoHabitacion){
        /* if (tipoHabitacion==null)
-            throw new NullPointerException("ERROR: El tipo de habitación es nulo.");
+            throw new NullPointerException("ERROR: El tipo de habitaciï¿½n es nulo.");
         Reserva [] reservasHabitacion=new Reserva[CAPACIDAD];
         int contador = 0;
         for (Reserva reserva: reservas.get()){
@@ -233,9 +235,9 @@ public class Vista {
         }
 
         if (contador==0)
-            System.out.println("El tipo de habitación "+ tipoHabitacion+" no tiene reservas realizadas");
+            System.out.println("El tipo de habitaciï¿½n "+ tipoHabitacion+" no tiene reservas realizadas");
         else{
-            System.out.println("Listado de reservas del tipo de habitación "+tipoHabitacion+ ":");
+            System.out.println("Listado de reservas del tipo de habitaciï¿½n "+tipoHabitacion+ ":");
             for (int i = 0; i < contador; i++) {
                 System.out.println(reservasHabitacion[i].toString());
             }
@@ -254,7 +256,7 @@ public class Vista {
         int capacidadReservasAnulables=0;
         for (Reserva reserva: reservasAAnular){
             if (reserva != null && reserva.getFechaInicioReserva().isAfter(fechaAhora))
-                capacidadReservasAnulables++; // Aquí creamos la capacidad del array que vamos a crear y que luego vamos a devolver, contando la cantidad de reservas que se todavía no han llegado la fecha de inicio.
+                capacidadReservasAnulables++; // Aquï¿½ creamos la capacidad del array que vamos a crear y que luego vamos a devolver, contando la cantidad de reservas que se todavï¿½a no han llegado la fecha de inicio.
         }
         int i=0;
         Reserva[] reservaAnulables = new Reserva[capacidadReservasAnulables];
@@ -269,7 +271,7 @@ public class Vista {
 
         int opcion = 0;
         Huesped huesped = Consola.getClientePorDni();
-        // Aqui lo que hago es copiar el codigo de leerReserva de un Huesped para poder saber cuales son de nuevo las reservas de ese huesped, ya que el método no devuelve nada.
+        // Aqui lo que hago es copiar el codigo de leerReserva de un Huesped para poder saber cuales son de nuevo las reservas de ese huesped, ya que el mï¿½todo no devuelve nada.
         Reserva[] reservasHuesped = new Reserva[Modelo.CAPACIDAD]; //Aqui he llamado a capacidad de modelo.
         int contador = 0;
         for (Reserva reserva : controlador.getReservas()) {
@@ -285,12 +287,12 @@ public class Vista {
                     Reserva reservaHuespedABorrar = reservasHuesped[0];
                     do{
                         System.out.println("Desea anular la reserva que tiene?");
-                        System.out.println("1.- Sí");
+                        System.out.println("1.- Sï¿½");
                         System.out.println("2.- No");
-                        System.out.println("Escoja una opción: ");
+                        System.out.println("Escoja una opciï¿½n: ");
                         opcion = Entrada.entero();
                         if (opcion<1 || opcion>2)
-                            System.out.println("Opción inválida, por favor, ingrese una opción correcta.");
+                            System.out.println("Opciï¿½n invï¿½lida, por favor, ingrese una opciï¿½n correcta.");
                     }while (opcion<1 || opcion>2);
                     switch (opcion){
                         case 1:
@@ -302,12 +304,12 @@ public class Vista {
                                 System.out.println(e.getMessage());
                             }
                         case 2:
-                            System.out.println("Operación abortada");
+                            System.out.println("Operaciï¿½n abortada");
                             break;
                     }
 
                 } else {
-                    // ME FALTA POR AÑADIR LA CONFIRMACIÓN FINAL DE BORRAR LA RESERVA QUE SE SELECCIONA.
+                    // ME FALTA POR Aï¿½ADIR LA CONFIRMACIï¿½N FINAL DE BORRAR LA RESERVA QUE SE SELECCIONA.
                     do {
                         int posicion=1;
                         System.out.println("Listado de reservas del Huesped " + huesped.getNombre() + ":");
@@ -315,10 +317,10 @@ public class Vista {
                             System.out.println(posicion+".- "+reservasHuesped[i].toString());
                             posicion++;
                         }
-                        System.out.println("Indique qué reserva desea anular: ");
+                        System.out.println("Indique quï¿½ reserva desea anular: ");
                         opcion = Entrada.entero();
                         if (opcion<1 || opcion>reservasHuesped.length)
-                            System.out.println("Opción inválida, por favor, ingrese una opción correcta,");
+                            System.out.println("Opciï¿½n invï¿½lida, por favor, ingrese una opciï¿½n correcta,");
                     }while (opcion<1 || opcion>reservasHuesped.length);
                     try{
                         controlador.borrar(reservasHuesped[opcion-1]);
@@ -341,9 +343,9 @@ public class Vista {
                 System.out.println("Indique el tipo de Reservas a mostrar: ");
                 System.out.println("1.- Listar todas las reservas");
                 System.out.println("2.- Listar reservas por huesped");
-                System.out.println("3.- Listar reservas por tipo de habitación");
+                System.out.println("3.- Listar reservas por tipo de habitaciï¿½n");
                 opcion = Entrada.entero();
-                if (opcion < 1 || opcion > 3) System.out.println("Indique una opción válida.");
+                if (opcion < 1 || opcion > 3) System.out.println("Indique una opciï¿½n vï¿½lida.");
             } while (opcion < 1 || opcion > 3);
             switch (opcion) {
                 case 1:
@@ -368,7 +370,7 @@ public class Vista {
         }
     }
 
-    // Aquí no supe que tenía que hacer por que no se que tipo de método es, en tanto que no se que tipo de dato devuelve.
+    // Aquï¿½ no supe que tenï¿½a que hacer por que no se que tipo de mï¿½todo es, en tanto que no se que tipo de dato devuelve.
     // POSIBLEMENTE ESTE METODO NO ESTE BIEN IMPLEMENTADO DEL TODO.
     private int getNumElementosNoNulos(Reserva[] reservaNoNula){
 
@@ -385,7 +387,7 @@ public class Vista {
 
 
     private Habitacion consultarDisponibilidad(TipoHabitacion tipoHabitacion, LocalDate fechaInicioReserva, LocalDate fechaFinReserva){
-        /* Este algorítmo es sacado de la carpeta de drive donde se nos ha proporcionado el mismo.  */
+        /* Este algorï¿½tmo es sacado de la carpeta de drive donde se nos ha proporcionado el mismo.  */
         boolean tipoHabitacionEncontrada=false;
         Habitacion habitacionDisponible=null;
         int numElementos=0;
@@ -406,7 +408,7 @@ public class Vista {
                 if (numElementos == 0)
                 {
                     //Si la primera de las habitaciones encontradas del tipo solicitado no tiene reservas en el futuro,
-                    // quiere decir que está disponible.
+                    // quiere decir que estï¿½ disponible.
                     habitacionDisponible=new Habitacion(habitacionesTipoSolicitado[i]);
                     tipoHabitacionEncontrada=true;
                 }
@@ -414,7 +416,7 @@ public class Vista {
 
                     //Ordenamos de mayor a menor las reservas futuras encontradas por fecha de fin de la reserva.
                     // Si la fecha de inicio de la reserva es posterior a la mayor de las fechas de fin de las reservas
-                    // (la reserva de la posición 0), quiere decir que la habitación está disponible en las fechas indicadas.
+                    // (la reserva de la posiciï¿½n 0), quiere decir que la habitaciï¿½n estï¿½ disponible en las fechas indicadas.
 
                     Arrays.sort(reservasFuturas, 0, numElementos, Comparator.comparing(Reserva::getFechaFinReserva).reversed());
 
@@ -431,7 +433,7 @@ public class Vista {
                     {
                         //Ordenamos de menor a mayor las reservas futuras encontradas por fecha de inicio de la reserva.
                         // Si la fecha de fin de la reserva es anterior a la menor de las fechas de inicio de las reservas
-                        // (la reserva de la posición 0), quiere decir que la habitación está disponible en las fechas indicadas.
+                        // (la reserva de la posiciï¿½n 0), quiere decir que la habitaciï¿½n estï¿½ disponible en las fechas indicadas.
 
                         Arrays.sort(reservasFuturas, 0, numElementos, Comparator.comparing(Reserva::getFechaInicioReserva));
 
@@ -445,7 +447,7 @@ public class Vista {
                         }
                     }
 
-                    //Recorremos el array de reservas futuras para ver si las fechas solicitadas están algún hueco existente entre las fechas reservadas
+                    //Recorremos el array de reservas futuras para ver si las fechas solicitadas estï¿½n algï¿½n hueco existente entre las fechas reservadas
                     if (!tipoHabitacionEncontrada)
                     {
                         for(int j=1;j<reservasFuturas.length && !tipoHabitacionEncontrada;j++)
@@ -485,19 +487,16 @@ public class Vista {
             System.out.println("Inserte que reserva desea realizar el checkIn: ");
             opcion=Entrada.entero();
             if(opcion<0 || opcion>reservasHuesped.length)
-                System.out.println("La opción no es válida.");
+                System.out.println("La opciï¿½n no es vï¿½lida.");
 
         }while (opcion<0 || opcion>reservasHuesped.length);
-        Reserva reservaARealizarCheckin= new Reserva(controlador.getReserva(huesped)[0]); //Aquí tenía que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
-        for (int i=0; i<reservasHuesped.length;i++){
-            if (opcion-1 == i){
-                reservaARealizarCheckin= reservasHuesped[i];
-            }
-        }
+        Reserva reservaARealizarCheckin= controlador.getReserva(huesped)[opcion-1]; //Aquï¿½ tenï¿½a que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
+
         try {
 
             controlador.realizarCheckin(reservaARealizarCheckin, Consola.leerFechaHora("Inserte la fecha de Checkin: "));
-        }catch (NullPointerException e){
+            System.out.println("Se ha realizado el CheckIn correctamente.");
+        }catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
     }
@@ -507,6 +506,7 @@ public class Vista {
 
         Huesped huesped=Consola.getClientePorDni();
         listarReservas(huesped);
+
         Reserva[] reservasHuesped= new Reserva[controlador.getReserva(huesped).length];
         int contador=0;
         for (Reserva reservaHuesped: controlador.getReserva(huesped)){
@@ -518,10 +518,10 @@ public class Vista {
             System.out.println("Inserte que reserva desea realizar el checkout: ");
             opcion=Entrada.entero();
             if(opcion<0 || opcion>reservasHuesped.length)
-                System.out.println("La opción no es válida.");
+                System.out.println("La opciï¿½n no es vï¿½lida.");
 
         }while (opcion<0 || opcion>reservasHuesped.length);
-        Reserva reservaARealizarCheckout= new Reserva(controlador.getReserva(huesped)[0]); //Aquí tenía que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
+        Reserva reservaARealizarCheckout= new Reserva(controlador.getReserva(huesped)[0]); //Aquï¿½ tenï¿½a que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
         for (int i=0; i<reservasHuesped.length;i++){
             if (opcion-1 == i){
                 reservaARealizarCheckout= reservasHuesped[i];
@@ -529,7 +529,8 @@ public class Vista {
         }
     try {
     controlador.realizarCheckout(reservaARealizarCheckout, Consola.leerFechaHora("Inserte la fecha de Checkout: "));
-    }catch (NullPointerException e){
+        System.out.println("Se ha realizado el CheckOut correctamente.");
+    }catch (NullPointerException | IllegalArgumentException e){
         System.out.println(e.getMessage());
 }
     }

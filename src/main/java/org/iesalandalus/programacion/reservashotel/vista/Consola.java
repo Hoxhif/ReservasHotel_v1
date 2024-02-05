@@ -2,9 +2,7 @@ package org.iesalandalus.programacion.reservashotel.vista;
 
 
 
-
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.*;
-import org.iesalandalus.programacion.reservashotel.modelo.negocio.*;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import java.time.LocalDate;
@@ -13,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 import static org.iesalandalus.programacion.reservashotel.MainApp.*;
+import static org.iesalandalus.programacion.reservashotel.modelo.Modelo.habitaciones;
+import static org.iesalandalus.programacion.reservashotel.modelo.Modelo.huespedes;
 
 
 public class Consola {
@@ -69,8 +69,12 @@ public class Consola {
             case 10: return Opcion.INSERTAR_RESERVA;
             case 11: return Opcion.ANULAR_RESERVA;
             case 12: return Opcion.MOSTRAR_RESERVAS;
-            case 13: return(Opcion.CONSULTAR_DISPONIBILIDAD);
+            case 13: return(Opcion.REALIZAR_CHECKIN);
+            case 14: return (Opcion.REALIZAR_CHECKOUT);
+            case 15: return (Opcion.CONSULTAR_DISPONIBILIDAD);
             default:return Opcion.SALIR;
+
+            // Esto lo tenemos que mejorar.
         }
     }
 
@@ -171,7 +175,7 @@ public class Consola {
     }
 
     public static LocalDateTime leerFechaHora(String mensaje){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Reserva.FORMATO_FECHA_HORA_RESERVA);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         LocalDateTime fecha = null;
 
         do {
@@ -180,7 +184,7 @@ public class Consola {
                 String fechaString = Entrada.cadena();
                 fecha = LocalDateTime.parse(fechaString, formatter);
             } catch (DateTimeParseException e) {
-                System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy hh:mm:ss)");
+                System.out.println("La fecha introducida tiene un formato incorrecto (Usar dd/MM/yyyy HH:mm:ss)");
             }
         } while (fecha == null);
 
