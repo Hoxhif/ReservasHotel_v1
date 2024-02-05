@@ -10,6 +10,7 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -112,7 +113,7 @@ public class Vista {
 
     private void buscarHuesped(){
         try{
-            System.out.println(controlador.buscar(Consola.leerHabitacionPorIdentificador()));
+            System.out.println(controlador.buscar(Consola.getClientePorDni()));
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -186,7 +187,7 @@ public class Vista {
     private void insertarReserva(){
         try{
             Reserva nuevaReserva = Consola.leerReserva();
-            if (controlador.getReservas().length>0) {
+            if (getNumElementosNoNulos(controlador.getReservas())>0) { //CAMBIAR LENGTH POR ELEMENTOSNONULOS.
                 Habitacion habitacionDisponible = consultarDisponibilidad(nuevaReserva.getHabitacion().getTipoHabitacion(), nuevaReserva.getFechaInicioReserva(), nuevaReserva.getFechaFinReserva());
                 if (habitacionDisponible != null) {
                     controlador.insertar(nuevaReserva);
@@ -492,7 +493,8 @@ public class Vista {
         Reserva[] reservasHuesped= new Reserva[controlador.getReserva(huesped).length];
         int contador=0;
         for (Reserva reservaHuesped: controlador.getReserva(huesped)){
-            reservasHuesped[contador++]=reservaHuesped;
+            reservasHuesped[contador]=reservaHuesped;
+            contador++;
         }
 
         int opcion=0;
@@ -503,11 +505,12 @@ public class Vista {
                 System.out.println("La opci�n no es v�lida.");
 
         }while (opcion<0 || opcion>reservasHuesped.length);
-        Reserva reservaARealizarCheckin= controlador.getReserva(huesped)[opcion-1]; //Aqu� ten�a que inicializar la reserva porque sino me daba errores. Es posible que tenga que cambiarlo.
 
         try {
-            controlador.realizarCheckin(reservaARealizarCheckin, Consola.leerFechaHora("Inserte la fecha y hora de Checkin: "));
-            System.out.println("Se ha realizado el CheckIn correctamente.");
+            if (controlador.getReserva((huesped))[opcion-1].getCheckIn()==null){
+                controlador.realizarCheckin(controlador.getReserva(huesped)[opcion - 1], Consola.leerFechaHora("Inserte la fecha y hora de Checkin: "));
+                System.out.println("Se ha realizado el CheckIn correctamente.");
+            }else System.out.println("Ya se ha realizado el checkIn para esta reserva.");
         }catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
@@ -540,8 +543,10 @@ public class Vista {
             }
         }
     try {
-    controlador.realizarCheckout(reservaARealizarCheckout, Consola.leerFechaHora("Inserte la fecha y hora de Checkout: "));
-        System.out.println("Se ha realizado el CheckOut correctamente.");
+        if (reservaARealizarCheckout.getCheckOut()==null) {
+            controlador.realizarCheckout(reservaARealizarCheckout, Consola.leerFechaHora("Inserte la fecha y hora de Checkout: "));
+            System.out.println("Se ha realizado el CheckOut correctamente.");
+        }else System.out.println("Ya se ha realizado el CheckOut para esta reserva.");
     }catch (NullPointerException | IllegalArgumentException e){
         System.out.println(e.getMessage());
 }

@@ -30,6 +30,13 @@ public class Reserva {
         setFechaFinReserva(fechaFinReserva);
         setNumeroPersonas(numeroPersonas);
         setPrecio();
+        if (getCheckOut()!=null){
+            setCheckIn(checkIn);
+        }
+        if (getCheckOut()!=null){
+            setCheckOut(checkOut);
+        }
+        //He tenido problemas con el checkIn y checkOut, he intentado mil cosas pero no consigo entender por que me sigue mostrando en el método toString "No registrado" cuando ya he hecho un checkIn.
     }
 
     public Reserva (Reserva reserva){
@@ -42,6 +49,8 @@ public class Reserva {
         setFechaFinReserva(reserva.getFechaFinReserva());
         setNumeroPersonas(reserva.getNumeroPersonas());
         setPrecio();
+        setCheckIn(reserva.getCheckIn());
+        setCheckOut(reserva.getCheckOut());
     }
 
     public Huesped getHuesped() {
@@ -112,10 +121,12 @@ public class Reserva {
     }
 
     public void setCheckIn(LocalDateTime checkIn) {
-        if (checkIn == null)
-            throw new NullPointerException("ERROR: El checkin de una reserva no puede ser nulo.");
-        if (checkIn.isBefore(getFechaInicioReserva().atStartOfDay()))
-            throw new IllegalArgumentException("ERROR: El checkin de una reserva no puede ser anterior a la fecha de inicio de la reserva.");
+        /*if (checkIn == null)
+            throw new NullPointerException("ERROR: El checkin de una reserva no puede ser nulo.");*/
+        if (checkIn!=null) {
+            if (checkIn.isBefore(getFechaInicioReserva().atStartOfDay()))
+                throw new IllegalArgumentException("ERROR: El checkin de una reserva no puede ser anterior a la fecha de inicio de la reserva.");
+        }
         this.checkIn = checkIn;
     }
 
@@ -124,12 +135,15 @@ public class Reserva {
     }
 
     public void setCheckOut(LocalDateTime checkOut) {
-        if (checkOut==null)
-            throw new NullPointerException("ERROR: El checkout de una reserva no puede ser nulo.");
-        if (checkOut.isBefore(getCheckIn()))
-            throw new IllegalArgumentException("ERROR: El checkout de una reserva no puede ser anterior al checkin.");
-        if (checkOut.isAfter(getFechaFinReserva().atTime(MAX_HORAS_POSTERIOR_CHECKOUT,0)))
-            throw new IllegalArgumentException("ERROR: El checkout de una reserva puede ser como máximo 12 horas después de la fecha de fin de la reserva.");
+        /*if (checkOut==null)
+            throw new NullPointerException("ERROR: El checkout de una reserva no puede ser nulo.");*/
+        if (checkOut!=null) {
+            if (checkOut.isBefore(getCheckIn()))
+                throw new IllegalArgumentException("ERROR: El checkout de una reserva no puede ser anterior al checkin.");
+
+            if (checkOut.isAfter(getFechaFinReserva().atTime(MAX_HORAS_POSTERIOR_CHECKOUT, 0)))
+                throw new IllegalArgumentException("ERROR: El checkout de una reserva puede ser como máximo 12 horas después de la fecha de fin de la reserva.");
+        }
         this.checkOut = checkOut;
     }
 
@@ -179,10 +193,12 @@ public class Reserva {
                 checkOutString, getPrecio(), getNumeroPersonas());*/
         String checkInString="";
         String checkOutString="";
-        if (getCheckIn()==null) checkInString="No registrado";
-        if (getCheckOut()==null) checkOutString="No registrado";
-        if (getCheckIn()!=null) checkInString= getCheckIn().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
-        if (getCheckOut()!=null) checkOutString= getCheckOut().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_HORA_RESERVA));
+        if (checkIn==null) checkInString="No registrado";
+        else checkInString= checkIn.toString();
+        if (checkOut==null) checkOutString="No registrado";
+        else checkOutString= checkOut.toString();
+
+
 
         //return "Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",getHuesped().getNombre(),getHuesped().getDni(),getHabitacion().getIdentificador(),getHabitacion().getTipoHabitacion(),getFechaInicioReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)),getFechaFinReserva().format(DateTimeFormatter.ofPattern(FORMATO_FECHA_RESERVA)),checkInString,checkOutString,getPrecio(),getNumeroPersonas();
         return String.format("Huesped: %s %s Habitación:%s - %s Fecha Inicio Reserva: %s Fecha Fin Reserva: %s Checkin: %s Checkout: %s Precio: %.2f Personas: %d",getHuesped().getNombre(), getHuesped().getDni(),

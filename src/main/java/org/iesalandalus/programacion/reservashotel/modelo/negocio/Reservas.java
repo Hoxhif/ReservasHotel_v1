@@ -171,7 +171,8 @@ public class Reservas {
             contador = 0;
             for (Reserva reservaHuesped : get()) {
                 if (reservaHuesped.getHuesped().equals(huesped)) {
-                    reservasHuesped[contador++] = reservaHuesped;
+                    reservasHuesped[contador] = reservaHuesped;
+                    contador++;
                 }
             }
 
@@ -247,16 +248,28 @@ public class Reservas {
         return reservasFuturas;
     }
 
-    public void realizarCheckin(Reserva reserva, LocalDateTime fecha){
+    public void realizarCheckin(Reserva reserva, LocalDateTime fecha) {
         if (reserva == null | fecha == null)
             throw new NullPointerException("Ni la reserva ni la fecha pueden ser nulas.");
-        reserva.setCheckIn(fecha);
+        for (Reserva reservaARealizarCheckin : coleccionReservas) {
+            if (reservaARealizarCheckin != null) {
+                if (reservaARealizarCheckin.equals(reserva)) {
+                    reservaARealizarCheckin.setCheckIn(fecha);
+                }
+            }
+        }
     }
 
     public void realizarCheckout(Reserva reserva, LocalDateTime fecha){
         if (reserva == null | fecha == null)
             throw new NullPointerException("Ni la reserva ni la fecha pueden ser nulas.");
-        reserva.setCheckOut(fecha);
+        for (Reserva reservaARealizarCheckout: coleccionReservas){
+            if (reservaARealizarCheckout!=null){
+            if (reservaARealizarCheckout.equals(reserva)){
+                reservaARealizarCheckout.setCheckOut(fecha);
+            }
+            }
+        }
     }
 
 

@@ -33,11 +33,11 @@ public class Modelo {
         reservas = new Reservas(CAPACIDAD);
     }
 
-    public static void terminar(){
+    public void terminar(){
         System.out.println("Fin del programa.");
     }
 
-    public void insertar(Huesped huesped) throws OperationNotSupportedException{
+    public static void insertar(Huesped huesped) throws OperationNotSupportedException{
         // Aqui directamente hacemos la llamada al método que insertará el huesped en el array, y como no lo vamos a tratar aqui
         // sino que lo vamos a tratar la excepcion en la vista, pues hacemos un throws.
         huespedes.insertar(huesped);
@@ -47,7 +47,7 @@ public class Modelo {
         return huespedes.buscar(huesped);
     }
 
-    public static void borrar(Huesped huesped) throws OperationNotSupportedException{
+    public void borrar(Huesped huesped) throws OperationNotSupportedException{
         huespedes.borrar(huesped);
     }
 
@@ -70,7 +70,7 @@ public class Modelo {
         return habitaciones.buscar(habitacion);
     }
 
-    public static void borrar(Habitacion habitacion)throws OperationNotSupportedException{
+    public void borrar(Habitacion habitacion)throws OperationNotSupportedException{
         habitaciones.borrar(habitacion);
     }
 
@@ -102,7 +102,7 @@ public class Modelo {
         reservas.insertar(reserva);
     }
 
-    public static void borrar(Reserva reserva)throws OperationNotSupportedException{
+    public void borrar(Reserva reserva)throws OperationNotSupportedException{
         reservas.borrar(reserva);
     }
 
