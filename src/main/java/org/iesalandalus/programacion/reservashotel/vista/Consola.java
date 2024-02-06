@@ -198,16 +198,18 @@ public class Consola {
         int numeroPlanta, numeroPuerta;
         double precio;
     // Esto lo hago porque con las expceciones el programa se me apaga por completo y tengo que reiniciar el programa cada vez que hago un fallo, por lo que para ahorrarme eso tengo que hacer comprobaciones con el Do While.
-        do {
-            System.out.println("Escriba el número de la planta: ");
-            numeroPlanta = Entrada.entero();
-            if (numeroPlanta<1 || numeroPlanta>3) System.out.println("El numero de la planta debe ser entre 1 y 3.");
-        }while(numeroPlanta<1 || numeroPlanta>3);
-        do {
-            System.out.println("Escriba el número de la puerta: ");
-            numeroPuerta = Entrada.entero();
-            if (numeroPuerta<1 ||numeroPuerta>14) System.out.println("El numero de la puerta debe ser entre 1 y 14.");
-        }while(numeroPuerta<1 ||numeroPuerta>14);
+            do {
+                System.out.println("Escriba el número de la planta: ");
+                numeroPlanta = Entrada.entero();
+                if (numeroPlanta < 1 || numeroPlanta > 3)
+                    System.out.println("El numero de la planta debe ser entre 1 y 3.");
+            } while (numeroPlanta < 1 || numeroPlanta > 3);
+            do {
+                System.out.println("Escriba el número de la puerta: ");
+                numeroPuerta = Entrada.entero();
+                if (numeroPuerta < 1 || numeroPuerta > 14)
+                    System.out.println("El numero de la puerta debe ser entre 1 y 14.");
+            } while (numeroPuerta < 1 || numeroPuerta > 14);
         do {
             System.out.println("Escriba el precio de la habitación: ");
             precio = Entrada.realDoble();
