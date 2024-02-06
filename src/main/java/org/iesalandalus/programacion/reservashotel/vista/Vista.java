@@ -103,8 +103,10 @@ public class Vista {
         // se podr�a realmente haber omitido la linea de crear un nuevo objeto nuevoHuesped y directamente haber puesto en huespedes.insertar(Consola.leerHuesped());
         try {
             Huesped nuevoHuesped = Consola.leerHuesped();
-            controlador.insertar(nuevoHuesped);
-            System.out.println("Huesped creado satisfactoriamente");
+            if (nuevoHuesped != null){
+                controlador.insertar(nuevoHuesped);
+                System.out.println("Huesped creado satisfactoriamente");
+            }else System.out.println("Error al crear el huesped. No se han introducido datos válidos.");
         } catch (OperationNotSupportedException | NullPointerException e) {
             System.out.println(e.getMessage());
 
@@ -113,7 +115,10 @@ public class Vista {
 
     private void buscarHuesped(){
         try{
-            System.out.println(controlador.buscar(Consola.getClientePorDni()));
+            Huesped huesped = Consola.getClientePorDni();
+            if (huesped!=null)
+                System.out.println(controlador.buscar(huesped));
+            else System.out.println("No se a encontrado al Huesped.");
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -121,11 +126,13 @@ public class Vista {
     }
 
     private void borrarHuesped(){
-        Huesped huespedABorrar = Consola.getClientePorDni();
         try {
-            controlador.borrar(huespedABorrar);
-            System.out.println("Huesped borrado satisfactoriamente");
-        }catch (OperationNotSupportedException e){
+            Huesped huespedABorrar = Consola.getClientePorDni();
+            if (huespedABorrar!=null) {
+                controlador.borrar(huespedABorrar);
+                System.out.println("Huesped borrado satisfactoriamente");
+            }else System.out.println("No se puede borrar un huesped que no existe.");
+        }catch (OperationNotSupportedException | NullPointerException e){
             System.out.println(e.getMessage());
         }
 
@@ -146,8 +153,10 @@ public class Vista {
     private void insertarHabitacion(){
         try{
             Habitacion nuevaHabitacion = Consola.leerHabitacion();
-            controlador.insertar(nuevaHabitacion);
-            System.out.println("Habitaci�n creada satisfactoriamente");
+            if (nuevaHabitacion != null) {
+                controlador.insertar(nuevaHabitacion);
+                System.out.println("Habitaci�n creada satisfactoriamente");
+            }else System.out.println("Error al crear la habitación, los datos no son los esperados.");
         }catch (OperationNotSupportedException | NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -155,7 +164,10 @@ public class Vista {
 
     private void buscarHabitacion(){
         try{
-            System.out.println(controlador.buscar(Consola.leerHabitacionPorIdentificador()));
+            Habitacion habitacion = Consola.leerHabitacionPorIdentificador();
+            if (habitacion != null){
+                System.out.println(controlador.buscar(habitacion));
+            }else System.out.println("No se ha encontrado la habitación.");
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -164,10 +176,12 @@ public class Vista {
     }
 
     private void borrarHabitacion(){
-        Habitacion habitacionABorrar = Consola.leerHabitacionPorIdentificador();
         try{
-            controlador.borrar(habitacionABorrar);
-            System.out.println("Habitaci�n borrada satisfactoriamente");
+            Habitacion habitacionABorrar = Consola.leerHabitacionPorIdentificador();
+            if (habitacionABorrar != null) {
+                controlador.borrar(habitacionABorrar);
+                System.out.println("Habitaci�n borrada satisfactoriamente");
+            }else System.out.println("No se puede borrar la habitación porque no existe.");
         }catch (OperationNotSupportedException e){
             System.out.println(e.getMessage());
         }
@@ -187,19 +201,22 @@ public class Vista {
     private void insertarReserva(){
         try{
             Reserva nuevaReserva = Consola.leerReserva();
-            if (getNumElementosNoNulos(controlador.getReservas())>0) { //CAMBIAR LENGTH POR ELEMENTOSNONULOS.
-                Habitacion habitacionDisponible = consultarDisponibilidad(nuevaReserva.getHabitacion().getTipoHabitacion(), nuevaReserva.getFechaInicioReserva(), nuevaReserva.getFechaFinReserva());
-                if (habitacionDisponible != null) {
-                    controlador.insertar(nuevaReserva);
-                    System.out.println("Reserva creada satisfactoriamente");
-                } else
-                    System.out.println("No se puede realizar la reserva en esas fechas. No se encuentra disponible la habitaci�n");
-            }else{
-                if (nuevaReserva.getHabitacion()!=null) {
-                    controlador.insertar(nuevaReserva);
-                    System.out.println("Reserva creada satisfactoriamente");
+            if (nuevaReserva != null) {
+                if (getNumElementosNoNulos(controlador.getReservas()) > 0) { //CAMBIAR LENGTH POR ELEMENTOSNONULOS.
+                    Habitacion habitacionDisponible = consultarDisponibilidad(nuevaReserva.getHabitacion().getTipoHabitacion(), nuevaReserva.getFechaInicioReserva(), nuevaReserva.getFechaFinReserva());
+                    if (habitacionDisponible != null) {
+                        controlador.insertar(nuevaReserva);
+                        System.out.println("Reserva creada satisfactoriamente");
+                    } else
+                        System.out.println("No se puede realizar la reserva en esas fechas. No se encuentra disponible la habitaci�n");
+                } else {
+                    if (nuevaReserva.getHabitacion() != null) {
+                        controlador.insertar(nuevaReserva);
+                        System.out.println("Reserva creada satisfactoriamente");
+                    }
                 }
             }
+            else System.out.println("No se puede añadir una reserva con datos nulos.");
         }catch (OperationNotSupportedException | NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -227,11 +244,13 @@ public class Vista {
         }*/
 
         try{
-            int contador=1;
-            for (Reserva reservasHuesped: controlador.getReserva(huesped)){
-                System.out.println(contador+": "+reservasHuesped);
-                contador++;
-            }
+            if (huesped != null) {
+                int contador = 1;
+                for (Reserva reservasHuesped : controlador.getReserva(huesped)) {
+                    System.out.println(contador + ": " + reservasHuesped);
+                    contador++;
+                }
+            }else System.out.println("El DNI del huesped introducido no existe.");
         }catch(NullPointerException e){
             System.out.println(e.getMessage());
         }
@@ -257,9 +276,11 @@ public class Vista {
             }
         }*/
         try {
-            for (Reserva reservasTipoHabitacion: controlador.getReserva(tipoHabitacion)){
-                System.out.println(reservasTipoHabitacion);
-            }
+            if (tipoHabitacion != null) {
+                for (Reserva reservasTipoHabitacion : controlador.getReserva(tipoHabitacion)) {
+                    System.out.println(reservasTipoHabitacion);
+                }
+            }else System.out.println("El tipo de habitación introducida es nula.");
         }catch (NullPointerException e){
             System.out.println(e.getMessage());
         }

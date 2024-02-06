@@ -197,13 +197,22 @@ public class Consola {
     public static Habitacion leerHabitacion(){
         int numeroPlanta, numeroPuerta;
         double precio;
-
-        System.out.println("Escriba el número de la planta: ");
-        numeroPlanta = Entrada.entero();
-        System.out.println("Escriba el número de la puerta: ");
-        numeroPuerta = Entrada.entero();
-        System.out.println("Escriba el precio de la habitación: ");
-        precio = Entrada.realDoble();
+    // Esto lo hago porque con las expceciones el programa se me apaga por completo y tengo que reiniciar el programa cada vez que hago un fallo, por lo que para ahorrarme eso tengo que hacer comprobaciones con el Do While.
+        do {
+            System.out.println("Escriba el número de la planta: ");
+            numeroPlanta = Entrada.entero();
+            if (numeroPlanta<1 || numeroPlanta>3) System.out.println("El numero de la planta debe ser entre 1 y 3.");
+        }while(numeroPlanta<1 || numeroPlanta>3);
+        do {
+            System.out.println("Escriba el número de la puerta: ");
+            numeroPuerta = Entrada.entero();
+            if (numeroPuerta<1 ||numeroPuerta>14) System.out.println("El numero de la puerta debe ser entre 1 y 14.");
+        }while(numeroPuerta<1 ||numeroPuerta>14);
+        do {
+            System.out.println("Escriba el precio de la habitación: ");
+            precio = Entrada.realDoble();
+            if (precio<40 || precio>150) System.out.println("El precio de una habitación no debe ser superior a 40 o 150.");
+        }while(precio<40 || precio>150);
         System.out.println("Indique el tipo de habitación: ");
         TipoHabitacion tipo = leerTipoHabitacion();
         try {
@@ -243,10 +252,16 @@ public class Consola {
         try{
             int numPlanta, numPuerta;
             String combinacion;
-            System.out.println("Indique el numero de la planta: ");
-            numPlanta = Entrada.entero();
-            System.out.println("Indique el numero de la puerta: ");
-            numPuerta = Entrada.entero();
+            do {
+                System.out.println("Indique el numero de la planta: ");
+                numPlanta = Entrada.entero();
+                if (numPlanta<1 || numPlanta>3) System.out.println("El numero de la planta no puede ser superior a 3 o menor de 1.");
+            }while (numPlanta<1 || numPlanta>3);
+            do {
+                System.out.println("Indique el numero de la puerta: ");
+                numPuerta = Entrada.entero();
+                if (numPuerta<1 || numPuerta>14) System.out.println("El numero de puerta no puede ser menor de 1 o mayor de 14.");
+            }while (numPuerta<1 || numPuerta>14);
             combinacion = ""+numPlanta+numPuerta;
             for (Habitacion habitacionCorrespondiente: habitaciones.get()){
                 if (habitacionCorrespondiente.getIdentificador().equals(combinacion))
