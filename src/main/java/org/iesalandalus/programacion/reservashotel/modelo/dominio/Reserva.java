@@ -49,8 +49,10 @@ public class Reserva {
         setFechaFinReserva(reserva.getFechaFinReserva());
         setNumeroPersonas(reserva.getNumeroPersonas());
         setPrecio();
-        setCheckIn(reserva.getCheckIn());
-        setCheckOut(reserva.getCheckOut());
+        if (reserva.getCheckIn()!=null)
+            setCheckIn(reserva.getCheckIn());
+        if (reserva.getCheckOut()!=null)
+            setCheckOut(reserva.getCheckOut());
     }
 
     public Huesped getHuesped() {
@@ -124,12 +126,10 @@ public class Reserva {
     // Para poder realizar el checkIn y el checkOut, he tenido que jugar con valores nulos, de manera que null es un valor válido en el programa, por lo que he eliminado el NullPointerException.
 
     public void setCheckIn(LocalDateTime checkIn) {
-        /*if (checkIn == null)
-            throw new NullPointerException("ERROR: El checkin de una reserva no puede ser nulo.");*/
-        if (checkIn!=null) {
+            if (checkIn == null)
+                throw new NullPointerException("ERROR: El checkin de una reserva no puede ser nulo.");
             if (checkIn.isBefore(getFechaInicioReserva().atStartOfDay()))
                 throw new IllegalArgumentException("ERROR: El checkin de una reserva no puede ser anterior a la fecha de inicio de la reserva.");
-        }
         this.checkIn = checkIn;
     }
 
@@ -138,15 +138,12 @@ public class Reserva {
     }
 
     public void setCheckOut(LocalDateTime checkOut) {
-        /*if (checkOut==null)
-            throw new NullPointerException("ERROR: El checkout de una reserva no puede ser nulo.");*/
-        if (checkOut!=null) {
-            if (checkOut.isBefore(getCheckIn()))
-                throw new IllegalArgumentException("ERROR: El checkout de una reserva no puede ser anterior al checkin.");
-
-            if (checkOut.isAfter(getFechaFinReserva().atTime(MAX_HORAS_POSTERIOR_CHECKOUT, 0)))
+        if (checkOut==null)
+            throw new NullPointerException("ERROR: El checkout de una reserva no puede ser nulo.");
+        if (checkOut.isBefore(getCheckIn()))
+            throw new IllegalArgumentException("ERROR: El checkout de una reserva no puede ser anterior al checkin.");
+        if (checkOut.isAfter(getFechaFinReserva().atTime(MAX_HORAS_POSTERIOR_CHECKOUT, 0)))
                 throw new IllegalArgumentException("ERROR: El checkout de una reserva puede ser como máximo 12 horas después de la fecha de fin de la reserva.");
-        }
         this.checkOut = checkOut;
     }
 

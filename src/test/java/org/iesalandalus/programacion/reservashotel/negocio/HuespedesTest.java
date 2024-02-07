@@ -3,6 +3,7 @@ package org.iesalandalus.programacion.reservashotel.negocio;
 
 
 import org.iesalandalus.programacion.reservashotel.MainApp;
+import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Huesped;
 import org.iesalandalus.programacion.reservashotel.modelo.negocio.Huespedes;
 import org.junit.jupiter.api.Test;
@@ -68,9 +69,9 @@ public class HuespedesTest {
 
     @Test
     public void constructorCapacidadValidaCreaHuespedesCorrectamente() {
-        Huespedes huespedes = new Huespedes(MainApp.CAPACIDAD);
+        Huespedes huespedes = new Huespedes(Modelo.CAPACIDAD);
         assertNotEquals(null, huespedes, HUESPEDES_NO_CREADOS);
-        assertEquals(MainApp.CAPACIDAD, huespedes.getCapacidad(), HUESPEDES_NO_CREADOS);
+        assertEquals(Modelo.CAPACIDAD, huespedes.getCapacidad(), HUESPEDES_NO_CREADOS);
         assertEquals(0, huespedes.getTamano(), TAMANO_NO_ESPERADO);
     }
 

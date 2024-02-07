@@ -2,6 +2,7 @@ package org.iesalandalus.programacion.reservashotel.negocio;
 
 
 import org.iesalandalus.programacion.reservashotel.MainApp;
+import org.iesalandalus.programacion.reservashotel.modelo.Modelo;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.Habitacion;
 import org.iesalandalus.programacion.reservashotel.modelo.dominio.TipoHabitacion;
 import org.iesalandalus.programacion.reservashotel.modelo.negocio.Habitaciones;
@@ -63,9 +64,9 @@ public class HabitacionesTest {
 
     @Test
     public void constructorCapacidadValidaCreaHabitacionCorrectamente() {
-        Habitaciones habitaciones = new Habitaciones(MainApp.CAPACIDAD);
+        Habitaciones habitaciones = new Habitaciones(Modelo.CAPACIDAD);
         assertNotEquals(null, habitaciones, HABITACIONES_NO_CREADAS);
-        assertEquals(MainApp.CAPACIDAD, habitaciones.getCapacidad(), HABITACIONES_NO_CREADAS);
+        assertEquals(Modelo.CAPACIDAD, habitaciones.getCapacidad(), HABITACIONES_NO_CREADAS);
         assertEquals(0, habitaciones.getTamano(), TAMANO_NO_ESPERADO);
     }
 
