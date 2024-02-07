@@ -30,7 +30,7 @@ public class Reserva {
         setFechaFinReserva(fechaFinReserva);
         setNumeroPersonas(numeroPersonas);
         setPrecio();
-        if (getCheckOut()!=null){
+        if (getCheckIn()!=null){
             setCheckIn(checkIn);
         }
         if (getCheckOut()!=null){
